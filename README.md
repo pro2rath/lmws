@@ -14,7 +14,8 @@ This project is a web-based system for verifying workers using Aadhaar/Ration ca
 - Python 3.x
 - Flask
 - HTML, CSS, JavaScript (Bootstrap)
-- SQLite for database
+- mysql for database
 
 ## Directory Structure
+
 
