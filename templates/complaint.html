@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block title %}Submit Complaint{% endblock %}
+{% block content %}
+<h2>Submit a Complaint Against {{ worker.name }}</h2>
+<p>We take all complaints seriously. Please provide a clear and honest reason for your complaint. This will be reviewed by an administrator.</p>
+<form method="post">
+    <div class="mb-3">
+        <label for="reason" class="form-label">Reason for Complaint</label>
+        <textarea class="form-control" id="reason" name="reason" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-danger">Submit Complaint</button>
+    <a href="{{ url_for('search.search') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

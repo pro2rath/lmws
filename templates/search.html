@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block title %}Search Workers{% endblock %}
+{% block content %}
+<h2>Search for Verified Workers</h2>
+<form method="post" class="row g-3 mb-4 p-3 bg-light border rounded">
+    <div class="col-md-5">
+        <label for="work_type" class="form-label">Filter by Work Type</label>
+        <select class="form-select" id="work_type" name="work_type">
+            <option value="">All Work Types</option>
+            {% for wt in work_types %}
+            <option value="{{ wt.work_type }}" {% if request.form.work_type == wt.work_type %}selected{% endif %}>{{ wt.work_type }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-5">
+        <label for="location" class="form-label">Filter by Location</label>
+        <select class="form-select" id="location" name="location">
+            <option value="">All Locations</option>
+            {% for loc in locations %}
+            <option value="{{ loc.location }}" {% if request.form.location == loc.location %}selected{% endif %}>{{ loc.location }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    {% for worker in workers %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{ url_for('uploaded_file', filename=worker.selfie_path) }}" style="height: 250px; object-fit: cover;" alt="{{ worker.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ worker.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ worker.work_type }}</h6>
+                <p class="card-text">
+                    <i class="bi bi-geo-alt-fill"></i> {{ worker.location }}<br>
+                    <i class="bi bi-telephone-fill"></i> {{ worker.phone }}
+                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{{ url_for('track.add_work_log', worker_id=worker.id) }}" class="btn btn-sm btn-primary" title="Add a new work log for this worker">Rate Work</a>
+                <a href="{{ url_for('track.view_work_history', worker_id=worker.id) }}" class="btn btn-sm btn-secondary" title="View past work and ratings">View History</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12"><p class="text-center">No workers found.</p></div>
+    {% endfor %}
+</div>
+{% endblock %}

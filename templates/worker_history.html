@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}Work History for {{ worker.name }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Work History: {{ worker.name }}</h2>
+        <h5 class="text-muted">{{ worker.work_type }} | {{ worker.phone }}</h5>
+    </div>
+    <div class="text-end">
+        <h4>Average Rating</h4>
+        <h2 class="display-4 text-warning">
+            {{ "%.1f"|format(avg_rating) }} ★
+        </h2>
+    </div>
+</div>
+<a href="{{ url_for('track.add_work_log', worker_id=worker.id) }}" class="btn btn-success mb-4"><i class="bi bi-plus-circle"></i> Add New Work Log & Rate</a>
+<hr>
+{% if logs %}
+    {% for log in logs %}
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between">
+            <strong>Work Date: {{ log.work_date.strftime('%d-%b-%Y') }}</strong>
+            <span class="text-warning h5">
+                {% for i in range(log.rating) %}★{% endfor %}{% for i in range(5 - log.rating) %}☆{% endfor %}
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h6>Before Work</h6>
+                    <img src="{{ url_for('uploaded_file', filename=log.before_work_image_path) }}" class="img-fluid rounded border" alt="Before work">
+                </div>
+                <div class="col-md-6 text-center">
+                    <h6>After Work</h6>
+                    <img src="{{ url_for('uploaded_file', filename=log.after_work_image_path) }}" class="img-fluid rounded border" alt="After work">
+                </div>
+            </div>
+            {% if log.comments %}
+            <div class="mt-3">
+                <strong>Comments:</strong>
+                <p class="fst-italic bg-light p-2 rounded">"{{ log.comments }}"</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<p class="text-center lead">No work history has been logged for this worker yet.</p>
+{% endif %}
+{% endblock %}

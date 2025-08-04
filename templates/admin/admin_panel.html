@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+{% block title %}Admin Panel{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<p>Manage workers, verify new registrations, and review complaints.</p>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4><i class="bi bi-person-x"></i> Unverified Workers ({{ unverified|length }})</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Phone</th><th>Work Type</th><th>Location</th><th>Registered On</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for worker in unverified %}
+                    <tr>
+                        <td>{{ worker.id }}</td>
+                        <td>{{ worker.name }}</td>
+                        <td>{{ worker.phone }}</td>
+                        <td>{{ worker.work_type }}</td>
+                        <td>{{ worker.location }}</td>
+                        <td>{{ worker.registration_date.strftime('%d-%b-%Y') }}</td>
+                        <td><a href="{{ url_for('admin.verify_worker', worker_id=worker.id) }}" class="btn btn-primary btn-sm">Review</a></td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="7" class="text-center">No new workers to verify.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4><i class="bi bi-person-check"></i> Verified Workers ({{ verified|length }})</h4>
+    </div>
+    <div class="card-body">
+         <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Phone</th><th>Work Type</th><th>Status</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for worker in verified %}
+                    <tr class="{% if worker.is_blocked %}table-danger{% endif %}">
+                        <td>{{ worker.id }}</td>
+                        <td>{{ worker.name }}</td>
+                        <td>{{ worker.phone }}</td>
+                        <td>{{ worker.work_type }}</td>
+                        <td>{% if worker.is_blocked %}Blocked{% else %}Active{% endif %}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('admin.toggle_block', worker_id=worker.id) }}" class="d-inline">
+                                <button type="submit" class="btn btn-sm {% if worker.is_blocked %}btn-success{% else %}btn-warning{% endif %}">
+                                    {% if worker.is_blocked %}Unblock{% else %}Block{% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="6" class="text-center">No verified workers yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        <h4><i class="bi bi-exclamation-triangle"></i> Active Complaints ({{ complaints|length }})</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                 <thead>
+                    <tr>
+                        <th>Date</th><th>Worker Name (ID)</th><th>Complaint Reason</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complaint in complaints %}
+                    <tr>
+                        <td>{{ complaint.submitted_on.split(' ')[0] }}</td>
+                        <td>{{ complaint.name }} (ID: {{ complaint.worker_id }})</td>
+                        <td>{{ complaint.reason }}</td>
+                        <td>
+                             <form method="post" action="{{ url_for('admin.delete_complaint', complaint_id=complaint.id) }}" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4" class="text-center">No active complaints.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

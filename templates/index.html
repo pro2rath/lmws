@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}Welcome to LWMS{% endblock %}
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">தொழிலாளர் மேலாண்மை அமைப்புக்கு வருக!</h1>
+        <p class="col-md-8 fs-4">Trusted platform to connect with verified daily wage workers. Find reliable help for your needs quickly and efficiently.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a href="{{ url_for('search.search') }}" class="btn btn-primary btn-lg px-4 me-md-2">
+                <i class="bi bi-search"></i> Search for Workers
+            </a>
+            <a href="{{ url_for('register.register') }}" class="btn btn-outline-secondary btn-lg px-4">
+                <i class="bi bi-person-plus"></i> Register as a Worker
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-dark rounded-3">
+            <h2><i class="bi bi-calendar-check"></i> Daily Availability</h2>
+            <p>See who is available for work right now. Perfect for urgent, same-day jobs. Workers can mark their attendance daily.</p>
+            <a href="{{ url_for('daily.daily_view') }}" class="btn btn-outline-light">View Today's Workers</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+            <h2><i class="bi bi-shield-check"></i> Verified & Secure</h2>
+            <p>All workers are verified through their Aadhaar or Ration cards. A complaint system ensures accountability and trust.</p>
+            <a href="{{ url_for('privacy_policy') }}" class="btn btn-outline-secondary">Read Our Privacy Policy</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

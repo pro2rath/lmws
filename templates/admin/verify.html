@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block title %}Verify Worker{% endblock %}
+{% block content %}
+<h2>Review Registration for: {{ worker.name }}</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Worker Details</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>ID:</strong> {{ worker.id }}</li>
+                <li class="list-group-item"><strong>Name:</strong> {{ worker.name }}</li>
+                <li class="list-group-item"><strong>Phone:</strong> {{ worker.phone }}</li>
+                <li class="list-group-item"><strong>Work Type:</strong> {{ worker.work_type }}</li>
+                <li class="list-group-item"><strong>Location:</strong> {{ worker.location }}</li>
+                <li class="list-group-item"><strong>Registered:</strong> {{ worker.registration_date }}</li>
+            </ul>
+        </div>
+        <div class="mt-4">
+            <form method="post" action="{{ url_for('admin.approve_worker', worker_id=worker.id) }}" class="d-inline">
+                <button type="submit" class="btn btn-success btn-lg">Approve Worker</button>
+            </form>
+            <form method="post" action="{{ url_for('admin.reject_worker', worker_id=worker.id) }}" class="d-inline">
+                <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure you want to REJECT and DELETE this worker? This action cannot be undone.');">Reject & Delete</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>Submitted Documents</h4>
+        <div class="card mb-3">
+            <div class="card-header">Selfie</div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename=worker.selfie_path) }}" class="img-fluid rounded" alt="Selfie">
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">Aadhaar Card</div>
+            <div class="card-body">
+                <a href="{{ url_for('static', filename=worker.aadhaar_path) }}" target="_blank">
+                    <img src="{{ url_for('static', filename=worker.aadhaar_path) }}" class="img-fluid rounded" alt="Aadhaar Document">
+                </a>
+            </div>
+        </div>
+        {% if worker.rationcard_path %}
+        <div class="card mb-3">
+            <div class="card-header">Ration Card</div>
+            <div class="card-body">
+                <a href="{{ url_for('static', filename=worker.rationcard_path) }}" target="_blank">
+                    <img src="{{ url_for('static', filename=worker.rationcard_path) }}" class="img-fluid rounded" alt="Ration Card Document">
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

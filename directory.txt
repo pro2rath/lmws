@@ -1,0 +1,51 @@
+﻿lwms/
+├── app.py                           # Main Flask app
+├── templates/                      # HTML templates
+│   ├── index.html                  # Home page
+│   ├── register.html               # Worker registration
+│   ├── verify.html                 # ID verification
+│   ├── admin_panel.html            # Admin dashboard
+│   ├── complaint.html              # Complaint submission page
+│   ├── daily.html
+│   ├── search.html                 # Search/filter workers
+│   └── privacy_policy.html         # Tamil + English privacy info
+├── static/                         # Static files (CSS/JS/images)
+│   ├── css/
+│   │   └── style.css               # Styling for frontend
+│   ├── js/
+│   │   └── scripts.js              # JS for form validation, alerts
+│   └── images/
+│       └── default_profile.png     # Default image for workers
+├── uploads/                        # Uploaded ID proofs
+│   ├── aadhaar/                    # Aadhaar card images
+│   ├── rationcard/                 # Ration card images
+│   └── selfies/                    # Selfie with ID
+├── utils/                          # Utility scripts
+│   ├── validation.py               # Aadhaar/Ration format checker
+│   ├── tamil_unicode.py            # Tamil Unicode text loader
+│   └── image_checker.py            # Optional: Fake ID checker (future ML)
+├── routes/                         # Flask route modules
+│   ├── register.py                 # Handles registration logic
+│   ├── verify.py                   # Admin verification process
+│   ├── daily.py
+│   ├── search.py                   # Search/filter logic
+│   ├── complaint.py                # Handle complaint submissions
+│   └── admin.py                    # Admin controls (block, remove)
+├── README.md                       # Project overview
+├── LICENSE.txt                     # Free/open-source license (MIT)
+└── config.py                       # Configuration settings
+
+# All routes are imported into app.py and registered as blueprints.
+# The static/ and templates/ folders follow Flask's auto-detection.
+# Admin actions are protected with simple session login (no password stored).
+
+# Summary of core functionality:
+# - app.py initializes the server and registers all routes
+# - register.py handles worker form, photo upload, Aadhaar validation
+# - verify.py allows admin to view unverified workers and approve/reject
+# - complaint.py stores complaints in DB with worker_id and reason
+# - admin.py lets admin view complaints, block workers
+# - utils/validation.py checks Aadhaar format (12 digits, checksum optional)
+# - Tamil content is loaded using tamil_unicode.py
+# - uploads/ stores images linked by worker ID
+# - SQL schema stores name, phone, work type, image paths, verified status, complaints

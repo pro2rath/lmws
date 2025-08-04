@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block title %}Daily Availability{% endblock %}
+{% block content %}
+<h2>Workers Available Today ({{ today }})</h2>
+<p>The following verified workers have marked themselves as available for work today.</p>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    {% for worker in workers %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ url_for('static', filename='uploads/' + worker.selfie_path if worker.selfie_path else 'images/default_profile.png') }}" class="card-img-top worker-img" alt="{{ worker.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ worker.name }} <span class="badge bg-success">Available</span></h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ worker.work_type }}</h6>
+                <p class="card-text">
+                    <i class="bi bi-geo-alt-fill"></i> {{ worker.location }}<br>
+                    <i class="bi bi-telephone-fill"></i> {{ worker.phone }}
+                </p>
+            </div>
+             <div class="card-footer bg-transparent border-top-0">
+                <a href="{{ url_for('complaint.submit_complaint', worker_id=worker.id) }}" class="btn btn-sm btn-danger float-end" title="Report an issue with this worker">Complain</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <p class="text-center lead mt-4">No workers have marked themselves as available today. Please check back later.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

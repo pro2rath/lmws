@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block title %}Register a Worker{% endblock %}
+{% block content %}
+<h2>Worker Registration (தொழிலாளர் பதிவு)</h2>
+<p>Please fill out the form below. All fields marked with * are required.</p>
+<form method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+        <label for="name" class="form-label">Full Name (முழு பெயர்) *</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="col-md-6">
+        <label for="phone" class="form-label">Phone Number (தொலைபேசி எண்) *</label>
+        <input type="tel" class="form-control" id="phone" name="phone" required pattern="[0-9]{10}">
+        <div class="form-text">Enter a 10-digit mobile number.</div>
+    </div>
+    <div class="col-md-6">
+        <label for="work_type" class="form-label">Type of Work (வேலை வகை) *</label>
+        <select class="form-select" id="work_type" name="work_type" required>
+            <option selected disabled value="">Choose...</option>
+            <option>Painter (பெயிண்டர்)</option>
+            <option>Plumber (பிளம்பர்)</option>
+            <option>Electrician (எலக்ட்ரீஷியன்)</option>
+            <option>Carpenter (தச்சர்)</option>
+            <option>Mason (கொத்தனார்)</option>
+            <option>General Labour (பொது தொழிலாளி)</option>
+            <option>Gardener (தோட்டக்காரர்)</option>
+            <option>House Keeping (வீட்டு பராமரிப்பு)</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="location" class="form-label">Location / Area (இடம் / பகுதி) *</label>
+        <input type="text" class="form-control" id="location" name="location" required placeholder="e.g., Gandhipuram, RS Puram">
+    </div>
+    <hr class="my-4">
+    <h5>ID Verification (அடையாள சரிபார்ப்பு)</h5>
+    <div class="col-md-6">
+        <label for="aadhaar_number" class="form-label">Aadhaar Number (ஆதார் எண்) *</label>
+        <input type="text" class="form-control" id="aadhaar_number" name="aadhaar_number" required pattern="[0-9]{12}">
+        <div class="form-text">Enter your 12-digit Aadhaar number without spaces.</div>
+    </div>
+    <div class="col-md-6">
+        <label for="selfie" class="form-label">Your Recent Photo (செல்ஃபி) *</label>
+        <input type="file" class="form-control" id="selfie" name="selfie" accept="image/*" required>
+    </div>
+    <div class="col-md-6">
+        <label for="aadhaar_file" class="form-label">Upload Aadhaar Card Photo (ஆதார் அட்டை) *</label>
+        <input type="file" class="form-control" id="aadhaar_file" name="aadhaar_file" accept="image/*,application/pdf" required>
+    </div>
+    <div class="col-md-6">
+        <label for="rationcard_file" class="form-label">Upload Ration Card Photo (ரேஷன் அட்டை) (Optional)</label>
+        <input type="file" class="form-control" id="rationcard_file" name="rationcard_file" accept="image/*,application/pdf">
+    </div>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Register (பதிவு)</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}Track Work for {{ worker.name }}{% endblock %}
+{% block content %}
+<h2>Add a Work Log & Rating for {{ worker.name }}</h2>
+<p>Please upload photos of the work before it started and after it was completed.</p>
+<form method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+        <label for="before_work_image" class="form-label">Before Work Image *</label>
+        <input type="file" class="form-control" id="before_work_image" name="before_work_image" accept="image/*" required>
+    </div>
+    <div class="col-md-6">
+        <label for="after_work_image" class="form-label">After Work Image *</label>
+        <input type="file" class="form-control" id="after_work_image" name="after_work_image" accept="image/*" required>
+    </div>
+    <div class="col-md-12">
+        <label for="rating" class="form-label">Rating *</label>
+        <select class="form-select" id="rating" name="rating" required>
+            <option value="" selected disabled>Select a rating...</option>
+            <option value="5">★★★★★ - Excellent</option>
+            <option value="4">★★★★☆ - Good</option>
+            <option value="3">★★★☆☆ - Average</option>
+            <option value="2">★★☆☆☆ - Poor</option>
+            <option value="1">★☆☆☆☆ - Very Bad</option>
+        </select>
+    </div>
+    <div class="col-12">
+        <label for="comments" class="form-label">Comments</label>
+        <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Optional: Add any comments about the work."></textarea>
+    </div>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Submit Work Log</button>
+        <a href="{{ url_for('search.search') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}
